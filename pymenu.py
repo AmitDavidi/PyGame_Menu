@@ -117,8 +117,9 @@ class Menu:
                     # if user clicked on a button - execute onclick and exit the menu
                     if hovered_button is not None:
                         hovered_button.onclick()
-                        pygame.event.clear()
-                        return
+                        if hovered_button.exit_on_click:
+                            pygame.event.clear()
+                            return
                     #for button in self.buttons:
                     #    if button.on_it_flag:
                     #        button.on_click()
