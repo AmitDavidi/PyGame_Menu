@@ -91,12 +91,13 @@ class Menu:
             m_x, m_y = pygame.mouse.get_pos()
             m_x -= self.start_location_x
             pos = (m_x, m_y)
-
+            hovered_button = None
             for button in self.buttons:
                 on_button = button.isOver(pos)
                 if on_button:
                     button.on_it_flag = True
                     button.color = BLUE
+                    hovered_button = button # save the button that is being hovered
                 else:
                     button.on_it_flag = False
                     button.color = GREY
@@ -114,11 +115,15 @@ class Menu:
                         break
 
                     # if user clicked on a button - execute onclick and exit the menu
-                    for button in self.buttons:
-                        if button.on_it_flag:
-                            button.on_click()
-                            pygame.event.clear()
-                            return
+                    if hovered_button is not None:
+                        hovered_button.onclick()
+                        pygame.event.clear()
+                        return
+                    #for button in self.buttons:
+                    #    if button.on_it_flag:
+                    #        button.on_click()
+                    #        pygame.event.clear()
+                    #       return
 
             for button in self.buttons:
                 button.drawButton()
